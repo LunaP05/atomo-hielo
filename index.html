@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Átomo de helio animado</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:transparent;
+}
+
+body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.atom{
+    width:min(92vw,650px);
+    height:min(92vh,650px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:transparent;
+}
+
+svg{
+    width:100%;
+    height:100%;
+    overflow:visible;
+}
+
+
+/* =========================
+   ÓRBITA ELECTRÓNICA
+   ========================= */
+
+.orbit{
+    fill:none;
+    stroke:#2b7cb3;
+    stroke-width:3;
+    stroke-dasharray:13 13;
+    opacity:.9;
+}
+
+
+/* =========================
+   MOVIMIENTO DE ELECTRONES
+   ========================= */
+
+.electron-orbit{
+    transform-box:view-box;
+    transform-origin:350px 350px;
+    animation:electronRotation 8s linear infinite;
+}
+
+@keyframes electronRotation{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* =========================
+   ELECTRONES
+   ========================= */
+
+.electron{
+    fill:#78b7ee;
+    stroke:#1d639b;
+    stroke-width:2.5;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));
+}
+
+.electron-sign{
+    fill:#153a5b;
+    font-family:Arial,sans-serif;
+    font-size:20px;
+    font-weight:bold;
+    text-anchor:middle;
+    dominant-baseline:central;
+}
+
+
+/* =========================
+   MOVIMIENTO DEL NÚCLEO
+   ========================= */
+
+.nucleus{
+    transform-box:view-box;
+    transform-origin:350px 350px;
+    animation:nucleusMotion 3s ease-in-out infinite alternate;
+}
+
+@keyframes nucleusMotion{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(1px,-1px);
+    }
+}
+
+
+/* =========================
+   PARTÍCULAS DEL NÚCLEO
+   ========================= */
+
+.particle{
+    stroke:#666;
+    stroke-width:2;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));
+}
+
+.proton{
+    fill:#e8e8e8;
+}
+
+.neutron{
+    fill:#adadad;
+}
+
+.particle-sign{
+    fill:#333;
+    font-family:Arial,sans-serif;
+    font-size:18px;
+    font-weight:bold;
+    text-anchor:middle;
+    dominant-baseline:central;
+}
+
+
+/* =========================
+   CÍRCULO PUNTEADO DEL NÚCLEO
+   ========================= */
+
+.nucleus-outline{
+    fill:none;
+    stroke:#444;
+    stroke-width:2;
+    stroke-dasharray:6 6;
+    opacity:.75;
+}
+
+
+/* =========================
+   MOVIMIENTO INTERNO DE PARTÍCULAS
+   ========================= */
+
+.nucleus-particle-1{
+    animation:particleMove1 2.5s ease-in-out infinite alternate;
+}
+
+.nucleus-particle-2{
+    animation:particleMove2 2.8s ease-in-out infinite alternate;
+}
+
+.nucleus-particle-3{
+    animation:particleMove3 2.6s ease-in-out infinite alternate;
+}
+
+.nucleus-particle-4{
+    animation:particleMove4 3s ease-in-out infinite alternate;
+}
+
+@keyframes particleMove1{
+    from{transform:translate(0,0)}
+    to{transform:translate(-1.5px,1.5px)}
+}
+
+@keyframes particleMove2{
+    from{transform:translate(0,0)}
+    to{transform:translate(1.5px,-1.5px)}
+}
+
+@keyframes particleMove3{
+    from{transform:translate(0,0)}
+    to{transform:translate(-1.5px,-1px)}
+}
+
+@keyframes particleMove4{
+    from{transform:translate(0,0)}
+    to{transform:translate(1.5px,1.5px)}
+}
+
+
+/* =========================
+   ACCESIBILIDAD
+   ========================= */
+
+@media (prefers-reduced-motion:reduce){
+    .electron-orbit,
+    .nucleus,
+    .nucleus-particle-1,
+    .nucleus-particle-2,
+    .nucleus-particle-3,
+    .nucleus-particle-4{
+        animation:none;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="atom">
+
+<svg
+    viewBox="0 0 700 700"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Átomo de helio animado"
+>
+
+<!-- =====================================================
+     ÓRBITA
+     ===================================================== -->
+<circle
+    class="orbit"
+    cx="350"
+    cy="350"
+    r="230"
+/>
+
+<!-- =====================================================
+     ELECTRONES (En diagonal opuesta como en la referencia)
+     ===================================================== -->
+<g class="electron-orbit">
+
+    <!-- ELECTRÓN 1 (Arriba a la derecha) -->
+    <g transform="translate(512 188)">
+        <circle class="electron" r="24"/>
+        <text class="electron-sign" y="1">−</text>
+    </g>
+
+    <!-- ELECTRÓN 2 (Abajo a la izquierda) -->
+    <g transform="translate(188 512)">
+        <circle class="electron" r="24"/>
+        <text class="electron-sign" y="1">−</text>
+    </g>
+
+</g>
+
+<!-- =====================================================
+     CÍRCULO PUNTEADO DEL NÚCLEO
+     ===================================================== -->
+<circle
+    class="nucleus-outline"
+    cx="350"
+    cy="350"
+    r="75"
+/>
+
+<!-- =====================================================
+     NÚCLEO (Compacto y con ambos protones con signo +)
+     ===================================================== -->
+<g class="nucleus">
+
+    <!-- NEUTRÓN 1 (Izquierda-Arriba) -->
+    <g class="nucleus-particle-1">
+        <circle class="particle neutron" cx="333" cy="333" r="26"/>
+    </g>
+
+    <!-- PROTÓN 1 (Derecha-Arriba) -->
+    <g class="nucleus-particle-2">
+        <circle class="particle proton" cx="367" cy="333" r="26"/>
+        <text class="particle-sign" x="367" cy="333" y="334">+</text>
+    </g>
+
+    <!-- PROTÓN 2 (Izquierda-Abajo) -->
+    <g class="nucleus-particle-3">
+        <circle class="particle proton" cx="333" cy="367" r="26"/>
+        <text class="particle-sign" x="333" cy="367" y="368">+</text>
+    </g>
+
+    <!-- NEUTRÓN 2 (Derecha-Abajo) -->
+    <g class="nucleus-particle-4">
+        <circle class="particle neutron" cx="367" cy="367" r="26"/>
+    </g>
+
+</g>
+
+</svg>
+
+</div>
+
+</body>
+</html>
